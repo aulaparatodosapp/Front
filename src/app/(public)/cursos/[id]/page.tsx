@@ -1,14 +1,29 @@
+
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-const cursos = [
+type Nivel = "Básico" | "Intermedio" | "Avanzado";
+
+type Curso = {
+  id: number;
+  nombre: string;
+  nivel: Nivel;
+  descripcion: string;
+  imagen: string;
+  requisitos: string[];
+  beneficios: string[];
+  modulos: string[];
+};
+
+const cursos: Curso[] = [
   {
     id: 1,
     nombre: "Introducción a la informática",
     nivel: "Básico",
     descripcion:
       "Aprende los fundamentos de la informática y el uso básico de una computadora.",
-    icono: "💻",
+    imagen: "/images/courses/informatica.jpg",
     requisitos: [
       "No necesitas conocimientos previos.",
       "Tener interés en aprender informática.",
@@ -31,8 +46,10 @@ const cursos = [
     nivel: "Básico",
     descripcion:
       "Conoce las herramientas esenciales para crear documentos, hojas de cálculo y presentaciones.",
-    icono: "📁",
-    requisitos: ["Conocimientos básicos de informática."],
+    imagen: "/images/courses/ofimatica.jpg",
+    requisitos: [
+      "Conocimientos básicos de informática.",
+    ],
     beneficios: [
       "Crear documentos digitales.",
       "Organizar información en hojas de cálculo.",
@@ -51,8 +68,10 @@ const cursos = [
     nivel: "Básico",
     descripcion:
       "Aprende a navegar por internet y proteger tu información personal.",
-    icono: "🔐",
-    requisitos: ["Conocimientos básicos de informática."],
+    imagen: "/images/courses/seguridad-digital.jpg",
+    requisitos: [
+      "Conocimientos básicos de informática.",
+    ],
     beneficios: [
       "Navegar por internet de forma segura.",
       "Reconocer riesgos digitales.",
@@ -71,8 +90,10 @@ const cursos = [
     nivel: "Intermedio",
     descripcion:
       "Desarrolla habilidades para utilizar herramientas digitales en tus actividades diarias.",
-    icono: "🖥️",
-    requisitos: ["Conocimientos básicos de informática e internet."],
+    imagen: "/images/courses/herramientas-digitales.jpg",
+    requisitos: [
+      "Conocimientos básicos de informática e internet.",
+    ],
     beneficios: [
       "Utilizar herramientas de productividad.",
       "Colaborar en entornos digitales.",
@@ -91,8 +112,10 @@ const cursos = [
     nivel: "Intermedio",
     descripcion:
       "Descubre los principios del diseño y crea tus primeros proyectos visuales.",
-    icono: "🎨",
-    requisitos: ["Manejo básico de herramientas digitales."],
+    imagen: "/images/courses/diseño-digital.jpg",
+    requisitos: [
+      "Manejo básico de herramientas digitales.",
+    ],
     beneficios: [
       "Comprender los fundamentos del diseño.",
       "Crear piezas visuales.",
@@ -111,8 +134,10 @@ const cursos = [
     nivel: "Intermedio",
     descripcion:
       "Conoce los conceptos fundamentales de la programación y la lógica computacional.",
-    icono: "⌨️",
-    requisitos: ["Conocimientos básicos de informática."],
+    imagen: "/images/courses/programación.jpg",
+    requisitos: [
+      "Conocimientos básicos de informática.",
+    ],
     beneficios: [
       "Comprender la lógica de programación.",
       "Identificar variables y estructuras de control.",
@@ -131,8 +156,10 @@ const cursos = [
     nivel: "Avanzado",
     descripcion:
       "Aprende a construir sitios web utilizando tecnologías modernas.",
-    icono: "🌐",
-    requisitos: ["Conocimientos básicos de programación."],
+    imagen: "/images/courses/desarrollo-web.jpg",
+    requisitos: [
+      "Conocimientos básicos de programación.",
+    ],
     beneficios: [
       "Crear estructuras web con HTML.",
       "Aplicar estilos con CSS.",
@@ -152,7 +179,7 @@ const cursos = [
     nivel: "Avanzado",
     descripcion:
       "Aprende a organizar, interpretar y visualizar información para tomar decisiones.",
-    icono: "📊",
+    imagen: "/images/courses/análisis-de-datos.jpg",
     requisitos: [
       "Manejo de hojas de cálculo.",
       "Conocimientos básicos de herramientas digitales.",
@@ -175,8 +202,10 @@ const cursos = [
     nivel: "Avanzado",
     descripcion:
       "Planifica y desarrolla proyectos digitales aplicando tus conocimientos.",
-    icono: "🚀",
-    requisitos: ["Conocimientos intermedios de herramientas digitales."],
+    imagen: "/images/courses/proyectos-digitales.jpg",
+    requisitos: [
+      "Conocimientos intermedios de herramientas digitales.",
+    ],
     beneficios: [
       "Planificar proyectos digitales.",
       "Organizar actividades y recursos.",
@@ -191,20 +220,17 @@ const cursos = [
   },
 ];
 
-const estilosNivel: Record<string, { fondo: string; etiqueta: string }> = {
-  Básico: {
-    fondo: "bg-green-100",
-    etiqueta: "bg-green-100 text-green-800",
-  },
-  Intermedio: {
-    fondo: "bg-blue-100",
-    etiqueta: "bg-blue-100 text-blue-800",
-  },
-  Avanzado: {
-    fondo: "bg-purple-100",
-    etiqueta: "bg-purple-100 text-purple-800",
-  },
+const estilosNivel: Record<Nivel, string> = {
+  Básico: "bg-green-100 text-green-800",
+  Intermedio: "bg-blue-100 text-blue-800",
+  Avanzado: "bg-purple-100 text-purple-800",
 };
+
+export function generateStaticParams() {
+  return cursos.map((curso) => ({
+    id: String(curso.id),
+  }));
+}
 
 export default async function DetalleCursoPage({
   params,
@@ -213,18 +239,18 @@ export default async function DetalleCursoPage({
 }) {
   const { id } = await params;
 
-  const curso = cursos.find((item) => item.id === Number(id));
+  const curso = cursos.find(
+    (item) => item.id === Number(id)
+  );
 
   if (!curso) {
     notFound();
   }
 
-  const estilo = estilosNivel[curso.nivel];
-
   return (
-    <div className="bg-white">
+    <main className="min-h-screen bg-white text-slate-700">
       {/* ENCABEZADO */}
-      <section className="bg-slate-100 px-6 py-14">
+      <section className="bg-slate-50 px-6 py-14">
         <div className="mx-auto max-w-7xl">
           <Link
             href="/cursos"
@@ -234,7 +260,7 @@ export default async function DetalleCursoPage({
           </Link>
 
           <span
-            className={`block w-fit rounded-full px-3 py-1 text-sm font-semibold ${estilo.etiqueta}`}
+            className={`block w-fit rounded-full px-3 py-1 text-sm font-semibold ${estilosNivel[curso.nivel]}`}
           >
             {curso.nivel}
           </span>
@@ -250,8 +276,18 @@ export default async function DetalleCursoPage({
       </section>
 
       {/* CONTENIDO */}
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-3">
-        <div className="space-y-10 lg:col-span-2">
+      <section
+        className="mx-auto max-w-7xl px-6 py-14"
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
+          gap: "40px",
+          alignItems: "start",
+        }}
+      >
+        {/* INFORMACIÓN DEL CURSO */}
+        <div className="space-y-10">
           {/* DESCRIPCIÓN */}
           <div>
             <h2 className="mb-4 text-2xl font-bold text-slate-900">
@@ -259,9 +295,9 @@ export default async function DetalleCursoPage({
             </h2>
 
             <p className="leading-8 text-slate-600">
-              {curso.descripcion} Este curso está diseñado para ayudarte a
-              desarrollar nuevas habilidades mediante contenidos organizados por
-              módulos.
+              {curso.descripcion} Este curso está diseñado
+              para ayudarte a desarrollar nuevas habilidades
+              mediante contenidos organizados por módulos.
             </p>
           </div>
 
@@ -277,8 +313,10 @@ export default async function DetalleCursoPage({
                   key={beneficio}
                   className="flex items-start gap-3 text-slate-600"
                 >
-                  <span className="font-bold text-green-700">✓</span>
-                  {beneficio}
+                  <span className="font-bold text-green-700">
+                    ✓
+                  </span>
+                  <span>{beneficio}</span>
                 </li>
               ))}
             </ul>
@@ -305,7 +343,9 @@ export default async function DetalleCursoPage({
                       Módulo {index + 1}
                     </p>
 
-                    <h3 className="font-semibold text-slate-900">{modulo}</h3>
+                    <h3 className="font-semibold text-slate-900">
+                      {modulo}
+                    </h3>
                   </div>
                 </div>
               ))}
@@ -328,27 +368,31 @@ export default async function DetalleCursoPage({
 
         {/* TARJETA LATERAL */}
         <aside>
-          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md lg:sticky lg:top-28">
-            <div
-              className={`flex h-48 items-center justify-center ${estilo.fondo}`}
-            >
-              <span className="text-8xl" role="img" aria-label={curso.nombre}>
-                {curso.icono}
-              </span>
-            </div>
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md">
+            {/* FOTOGRAFÍA */}
+            <Image
+              src={curso.imagen}
+              alt={curso.nombre}
+              width={600}
+              height={350}
+              className="block h-64 w-full object-cover"
+            />
 
+            {/* INFORMACIÓN DE INSCRIPCIÓN */}
             <div className="p-6">
               <h2 className="text-xl font-bold text-slate-900">
                 Comienza a aprender
               </h2>
 
               <p className="mt-3 text-sm leading-6 text-slate-600">
-                Explora el contenido de este curso y prepárate para desarrollar
-                nuevas habilidades.
+                Explora el contenido de este curso y prepárate
+                para desarrollar nuevas habilidades.
               </p>
 
               <div className="mt-6 rounded-lg bg-slate-100 p-4">
-                <p className="text-sm text-slate-600">Nivel del curso</p>
+                <p className="text-sm text-slate-600">
+                  Nivel del curso
+                </p>
 
                 <p className="mt-1 font-semibold text-slate-900">
                   {curso.nivel}
@@ -365,6 +409,6 @@ export default async function DetalleCursoPage({
           </div>
         </aside>
       </section>
-    </div>
+    </main>
   );
 }

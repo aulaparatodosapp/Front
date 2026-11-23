@@ -1,249 +1,254 @@
+
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
-const cursos = [
+type Nivel = "Básico" | "Intermedio" | "Avanzado";
+
+type Curso = {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  nivel: Nivel;
+  imagen: string;
+};
+
+const cursos: Curso[] = [
   {
     id: 1,
     nombre: "Introducción a la informática",
-    nivel: "Básico",
     descripcion:
       "Aprende los fundamentos de la informática y el uso básico de una computadora.",
-    icono: "💻",
+    nivel: "Básico",
+    imagen: "/images/courses/informatica.jpg",
   },
   {
     id: 2,
     nombre: "Herramientas de oficina",
-    nivel: "Básico",
     descripcion:
-      "Conoce las herramientas esenciales para crear documentos, hojas de cálculo y presentaciones.",
-    icono: "📁",
+      "Aprende a crear documentos, hojas de cálculo y presentaciones.",
+    nivel: "Básico",
+    imagen: "/images/courses/ofimatica.jpg",
   },
   {
     id: 3,
     nombre: "Internet y seguridad digital",
-    nivel: "Básico",
     descripcion:
-      "Aprende a navegar por internet y proteger tu información personal.",
-    icono: "🔐",
+      "Aprende a navegar de forma segura y proteger tu información.",
+    nivel: "Básico",
+    imagen: "/images/courses/seguridad-digital.jpg",
   },
   {
     id: 4,
     nombre: "Herramientas digitales",
-    nivel: "Intermedio",
     descripcion:
-      "Desarrolla habilidades para utilizar herramientas digitales en tus actividades diarias.",
-    icono: "🖥️",
+      "Descubre herramientas digitales para mejorar tu productividad.",
+    nivel: "Intermedio",
+    imagen: "/images/courses/herramientas-digitales.jpg",
   },
   {
     id: 5,
     nombre: "Diseño digital",
-    nivel: "Intermedio",
     descripcion:
-      "Descubre los principios del diseño y crea tus primeros proyectos visuales.",
-    icono: "🎨",
+      "Aprende principios de diseño y crea proyectos visuales.",
+    nivel: "Intermedio",
+    imagen: "/images/courses/diseño-digital.jpg",
   },
   {
     id: 6,
     nombre: "Introducción a la programación",
-    nivel: "Intermedio",
     descripcion:
-      "Conoce los conceptos fundamentales de la programación y la lógica computacional.",
-    icono: "⌨️",
+      "Desarrolla tu lógica y aprende conceptos de programación.",
+    nivel: "Intermedio",
+    imagen: "/images/courses/programación.jpg",
   },
   {
     id: 7,
     nombre: "Desarrollo web",
-    nivel: "Avanzado",
     descripcion:
-      "Aprende a construir sitios web utilizando tecnologías modernas.",
-    icono: "🌐",
+      "Aprende los fundamentos para crear sitios y aplicaciones web.",
+    nivel: "Avanzado",
+    imagen: "/images/courses/desarrollo-web.jpg",
   },
   {
     id: 8,
     nombre: "Análisis de datos",
-    nivel: "Avanzado",
     descripcion:
-      "Aprende a organizar, interpretar y visualizar información para tomar decisiones.",
-    icono: "📊",
+      "Aprende a organizar, analizar y visualizar información.",
+    nivel: "Avanzado",
+    imagen: "/images/courses/análisis-de-datos.jpg",
   },
   {
     id: 9,
     nombre: "Desarrollo de proyectos digitales",
-    nivel: "Avanzado",
     descripcion:
-      "Planifica y desarrolla proyectos digitales aplicando tus conocimientos.",
-    icono: "🚀",
+      "Aplica tus conocimientos en proyectos digitales.",
+    nivel: "Avanzado",
+    imagen: "/images/courses/proyectos-digitales.jpg",
   },
 ];
 
-const estilosNivel: Record<string, { fondo: string; etiqueta: string }> = {
-  Básico: {
-    fondo: "bg-green-100",
-    etiqueta: "bg-green-100 text-green-800",
-  },
-  Intermedio: {
-    fondo: "bg-blue-100",
-    etiqueta: "bg-blue-100 text-blue-800",
-  },
-  Avanzado: {
-    fondo: "bg-purple-100",
-    etiqueta: "bg-purple-100 text-purple-800",
-  },
+const niveles = ["Todos", "Básico", "Intermedio", "Avanzado"] as const;
+
+type FiltroNivel = (typeof niveles)[number];
+
+const estilosNivel: Record<Nivel, string> = {
+  Básico: "bg-green-100 text-green-800",
+  Intermedio: "bg-blue-100 text-blue-800",
+  Avanzado: "bg-purple-100 text-purple-800",
 };
 
 export default function CursosPage() {
   const [busqueda, setBusqueda] = useState("");
-  const [nivel, setNivel] = useState("Todos");
+  const [nivel, setNivel] = useState<FiltroNivel>("Todos");
 
-  const cursosFiltrados = cursos.filter((curso) => {
-    const coincideBusqueda = curso.nombre
-      .toLowerCase()
-      .includes(busqueda.toLowerCase().trim());
+  const cursosFiltrados = useMemo(() => {
+    const texto = busqueda.trim().toLowerCase();
 
-    const coincideNivel = nivel === "Todos" || curso.nivel === nivel;
+    return cursos.filter((curso) => {
+      const coincideBusqueda =
+        curso.nombre.toLowerCase().includes(texto) ||
+        curso.descripcion.toLowerCase().includes(texto);
 
-    return coincideBusqueda && coincideNivel;
-  });
+      const coincideNivel =
+        nivel === "Todos" || curso.nivel === nivel;
+
+      return coincideBusqueda && coincideNivel;
+    });
+  }, [busqueda, nivel]);
 
   return (
-    <div className="bg-white">
+    <main className="min-h-screen bg-white text-slate-700">
       {/* ENCABEZADO */}
-      <section className="bg-slate-100 px-6 py-16 text-center">
-        <div className="mx-auto max-w-4xl">
-          <h1 className="text-4xl font-bold text-slate-900 md:text-5xl">
+      <section className="bg-slate-50 py-16">
+        <div className="mx-auto max-w-7xl px-6">
+          <span className="font-semibold text-slate-600">
+            Aula para Todos
+          </span>
+
+          <h1 className="mt-3 text-4xl font-bold text-slate-900">
             Explora nuestros cursos
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-slate-600">
-            Descubre nuevas oportunidades de aprendizaje. Tenemos cursos para
-            cada etapa de tu formación.
+          <p className="mt-5 max-w-2xl leading-8 text-slate-600">
+            Descubre oportunidades de aprendizaje y desarrolla
+            nuevas habilidades digitales a tu propio ritmo.
           </p>
         </div>
       </section>
 
       {/* CATÁLOGO */}
       <section className="mx-auto max-w-7xl px-6 py-14">
-        {/* BUSCADOR Y FILTROS */}
-        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-          <div className="w-full md:max-w-md">
-            <label
-              htmlFor="buscar-curso"
-              className="mb-2 block text-sm font-semibold text-slate-700"
-            >
-              Buscar cursos
-            </label>
+        {/* BUSCADOR */}
+        <div className="mb-8">
+          <label
+            htmlFor="buscar-cursos"
+            className="mb-2 block font-semibold text-slate-900"
+          >
+            Buscar cursos
+          </label>
 
-            <input
-              id="buscar-curso"
-              type="search"
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-              placeholder="Ej. Programación, diseño..."
-              className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:border-slate-700"
-            />
-          </div>
-
-          <div className="w-full md:w-64">
-            <label
-              htmlFor="filtrar-nivel"
-              className="mb-2 block text-sm font-semibold text-slate-700"
-            >
-              Filtrar por nivel
-            </label>
-
-            <select
-              id="filtrar-nivel"
-              value={nivel}
-              onChange={(e) => setNivel(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:border-slate-700"
-            >
-              <option value="Todos">Todos los niveles</option>
-              <option value="Básico">Básico</option>
-              <option value="Intermedio">Intermedio</option>
-              <option value="Avanzado">Avanzado</option>
-            </select>
-          </div>
+          <input
+            id="buscar-cursos"
+            type="search"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            placeholder="Busca un curso por nombre o descripción..."
+            className="w-full rounded-xl border border-slate-300 bg-white px-5 py-3 text-slate-900 outline-none focus:border-slate-600"
+          />
         </div>
 
-        {/* CONTADOR */}
-        <p className="mb-6 text-sm text-slate-600">
-          Mostrando {cursosFiltrados.length} de {cursos.length} cursos
+        {/* FILTROS */}
+        <div className="mb-10 flex flex-wrap gap-3">
+          {niveles.map((opcion) => (
+            <button
+              key={opcion}
+              type="button"
+              onClick={() => setNivel(opcion)}
+              aria-pressed={nivel === opcion}
+              className={
+                nivel === opcion
+                  ? "rounded-full bg-slate-900 px-5 py-2 font-semibold text-white"
+                  : "rounded-full border border-slate-300 bg-white px-5 py-2 font-semibold text-slate-700 transition hover:bg-slate-100"
+              }
+            >
+              {opcion}
+            </button>
+          ))}
+        </div>
+
+        {/* RESULTADOS */}
+        <p className="mb-6 text-sm text-slate-500">
+          {cursosFiltrados.length}{" "}
+          {cursosFiltrados.length === 1
+            ? "curso encontrado"
+            : "cursos encontrados"}
         </p>
 
-        {/* TARJETAS */}
-        {cursosFiltrados.length > 0 ? (
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {cursosFiltrados.map((curso) => {
-              const estilo = estilosNivel[curso.nivel];
-
-              return (
-                <article
-                  key={curso.id}
-                  className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-                >
-                  <div
-                    className={`flex h-44 items-center justify-center ${estilo.fondo}`}
-                  >
-                    <span
-                      className="text-7xl"
-                      role="img"
-                      aria-label={curso.nombre}
-                    >
-                      {curso.icono}
-                    </span>
-                  </div>
-
-                  <div className="flex h-[250px] flex-col p-6">
-                    <span
-                      className={`mb-3 w-fit rounded-full px-3 py-1 text-xs font-semibold ${estilo.etiqueta}`}
-                    >
-                      {curso.nivel}
-                    </span>
-
-                    <h2 className="mb-3 text-xl font-bold text-slate-900">
-                      {curso.nombre}
-                    </h2>
-
-                    <p className="mb-5 line-clamp-3 text-sm leading-6 text-slate-600">
-                      {curso.descripcion}
-                    </p>
-
-                    <Link
-                      href={`/cursos/${curso.id}`}
-                      className="mt-auto block rounded-lg bg-slate-900 px-5 py-3 text-center font-semibold text-white transition hover:bg-slate-700"
-                    >
-                      Ver curso
-                    </Link>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="rounded-xl bg-slate-100 px-6 py-16 text-center">
-            <h2 className="text-xl font-semibold text-slate-900">
+        {cursosFiltrados.length === 0 ? (
+          <div className="rounded-xl bg-slate-50 px-6 py-12 text-center">
+            <h2 className="text-xl font-bold text-slate-900">
               No encontramos cursos
             </h2>
-
             <p className="mt-3 text-slate-600">
-              Prueba con otro nombre o selecciona un nivel diferente.
+              Prueba con otra búsqueda o selecciona otro nivel.
             </p>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+              gap: "24px",
+            }}
+          >
+            {cursosFiltrados.map((curso) => (
+              <article
+                key={curso.id}
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg"
+              >
+                {/* FOTOGRAFÍA */}
+                <div className="overflow-hidden">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.nombre}
+                    width={600}
+                    height={350}
+                    className="block h-48 w-full object-cover"
+                  />
+                </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setBusqueda("");
-                setNivel("Todos");
-              }}
-              className="mt-6 rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white hover:bg-slate-700"
-            >
-              Limpiar filtros
-            </button>
+                {/* INFORMACIÓN */}
+                <div className="p-6">
+                  <span
+                    className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${estilosNivel[curso.nivel]}`}
+                  >
+                    {curso.nivel}
+                  </span>
+
+                  <h2 className="mt-4 text-xl font-bold text-slate-900">
+                    {curso.nombre}
+                  </h2>
+
+                  <p className="mt-3 min-h-20 leading-7 text-slate-600">
+                    {curso.descripcion}
+                  </p>
+
+                  <Link
+                    href={`/cursos/${curso.id}`}
+                    className="mt-6 inline-block rounded-lg bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-700"
+                  >
+                    Ver curso
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         )}
       </section>
-    </div>
+    </main>
   );
 }
