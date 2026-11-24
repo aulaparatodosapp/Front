@@ -6,10 +6,10 @@ const premiumExtra = ["Clases exclusivas Premium (talleres, clases en vivo)", "C
 export default function PlanComparison({ current }: { current: BenefitType }) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <div className={`rounded-xl border-2 bg-white p-5 ${current === "ESTANDAR" ? "border-indigo-600" : "border-slate-200"}`}>
+      <div className={`rounded-xl border-2 bg-white p-5 ${current === "ESTANDAR" ? "border-slate-900" : "border-slate-200"}`}>
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-slate-900">Estándar</h3>
-          {current === "ESTANDAR" && <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700">Tu plan</span>}
+          {current === "ESTANDAR" && <span className="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-800">Tu plan</span>}
         </div>
         <ul className="mt-3 space-y-2 text-sm text-slate-700">
           {standard.map((b) => (

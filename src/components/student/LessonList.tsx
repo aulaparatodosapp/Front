@@ -54,7 +54,7 @@ export default function LessonList({ course, benefit, onClose }: Props) {
         )}
 
         {selected && (
-          <div className="mb-4 rounded-lg border border-indigo-200 bg-indigo-50 p-4">
+          <div className="mb-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
             <div className="flex aspect-video items-center justify-center rounded-lg bg-slate-900 text-sm text-white">
               ▶ Reproduciendo: {selected.title}
             </div>
@@ -71,7 +71,7 @@ export default function LessonList({ course, benefit, onClose }: Props) {
                 <button
                   onClick={() => open(l)}
                   className={`flex w-full items-center justify-between gap-3 rounded-lg border p-3 text-left ${
-                    locked ? "border-slate-200 bg-slate-50 text-slate-400" : "border-slate-200 bg-white hover:border-indigo-300"
+                    locked ? "border-slate-200 bg-slate-50 text-slate-400" : "border-slate-200 bg-white hover:border-slate-400"
                   }`}
                 >
                   <span>

@@ -24,11 +24,11 @@ export default function Sidebar({ active, onSelect, onLogout, open, onClose }: P
     <>
       {open && <div className="fixed inset-0 z-30 bg-slate-900/40 md:hidden" onClick={onClose} aria-hidden />}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex h-dvh max-h-dvh w-64 shrink-0 flex-col overflow-hidden bg-slate-700 p-4 pb-8 text-white transition-transform md:sticky md:top-0 md:translate-x-0 ${
+        className={`fixed left-0 top-[68px] z-40 flex h-[calc(100dvh-68px)] w-64 shrink-0 flex-col overflow-hidden bg-slate-700 p-4 pb-8 text-white transition-transform md:sticky md:top-[68px] md:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <p className="mb-6 shrink-0 px-2 text-lg font-bold text-white">Aula para todos</p>
+        <p className="mb-6 shrink-0 px-2 text-lg font-bold text-white">Mi panel</p>
         <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto">
           {items.map((i) => (
             <button
@@ -39,7 +39,7 @@ export default function Sidebar({ active, onSelect, onLogout, open, onClose }: P
               }}
               aria-current={active === i.id ? "page" : undefined}
               className={`rounded-lg px-3 py-2 text-left text-sm font-medium ${
-                active === i.id ? "bg-indigo-600 text-white" : "text-slate-300 hover:bg-white/10 hover:text-white"
+                active === i.id ? "bg-white text-slate-900" : "text-slate-300 hover:bg-white/10 hover:text-white"
               }`}
             >
               {i.label}

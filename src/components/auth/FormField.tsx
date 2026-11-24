@@ -14,7 +14,7 @@ export default function FormField({ label, error, id, ...rest }: Props) {
         id={fieldId}
         aria-invalid={!!error}
         aria-describedby={error ? `${fieldId}-error` : undefined}
-        className={`block w-full min-w-0 max-w-full rounded-lg border bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500 ${
+        className={`block w-full min-w-0 max-w-full rounded-xl border bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:border-slate-600 ${
           error ? "border-red-400" : "border-slate-300"
         }`}
         {...rest}

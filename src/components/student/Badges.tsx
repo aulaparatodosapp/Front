@@ -1,4 +1,4 @@
-import type { BenefitType, EnrollmentStatus } from "@/types";
+import type { BenefitType, CourseLevel, EnrollmentStatus } from "@/types";
 
 export function BenefitBadge({ benefit }: { benefit: BenefitType }) {
   return benefit === "PREMIUM" ? (
@@ -13,8 +13,8 @@ export function BenefitBadge({ benefit }: { benefit: BenefitType }) {
 }
 
 const statusStyles: Record<EnrollmentStatus, string> = {
-  Activa: "bg-emerald-100 text-emerald-700",
-  "En curso": "bg-indigo-100 text-indigo-700",
+  Activa: "bg-green-100 text-green-800",
+  "En curso": "bg-blue-100 text-blue-800",
   Pendiente: "bg-amber-100 text-amber-700",
   Completada: "bg-slate-200 text-slate-700",
 };
@@ -38,4 +38,15 @@ export function LockIcon({ className = "h-3.5 w-3.5" }: { className?: string }) 
       <path d="M8 11V7a4 4 0 0 1 8 0v4" />
     </svg>
   );
+}
+
+const levelStyles: Record<CourseLevel, string> = {
+  Básico: "bg-green-100 text-green-800",
+  Intermedio: "bg-blue-100 text-blue-800",
+  Avanzado: "bg-purple-100 text-purple-800",
+};
+
+/** Mismos colores de nivel que la sección pública de cursos */
+export function LevelBadge({ level }: { level: CourseLevel }) {
+  return <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${levelStyles[level]}`}>{level}</span>;
 }

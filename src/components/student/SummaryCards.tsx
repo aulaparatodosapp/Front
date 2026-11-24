@@ -11,7 +11,7 @@ export default function SummaryCards({ enrollments }: { enrollments: Enrollment[
       {stats.map((s) => (
         <div key={s.label} className="rounded-xl border border-slate-200 bg-white p-4">
           <p className="text-sm text-slate-500">{s.label}</p>
-          <p className="mt-1 text-3xl font-bold text-indigo-600">{s.value}</p>
+          <p className="mt-1 text-3xl font-bold text-slate-900">{s.value}</p>
         </div>
       ))}
     </div>

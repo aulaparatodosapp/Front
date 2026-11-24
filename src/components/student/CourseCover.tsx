@@ -3,16 +3,16 @@
 import { useState } from "react";
 
 /**
- * Portada del curso. Si la imagen no existe o falla, muestra un degradado índigo.
- * `encodeURI` evita problemas con caracteres como la «ñ» (ej. diseño-digital.jpg).
+ * Portada del curso: usa las mismas imágenes que la sección pública (`/images/courses/...`).
+ * Si la imagen falla, muestra un degradado slate. `encodeURI` cubre tildes y «ñ».
  */
 export default function CourseCover({ src, alt }: { src: string; alt: string }) {
   const [failed, setFailed] = useState(false);
   return (
-    <div className="relative h-24 w-full overflow-hidden rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600">
+    <div className="relative h-40 w-full overflow-hidden bg-gradient-to-br from-slate-600 to-slate-900">
       {!failed && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={encodeURI(src)} alt={alt} loading="lazy" onError={() => setFailed(true)} className="absolute inset-0 h-full w-full object-cover" />
+        <img src={encodeURI(src)} alt={alt} loading="lazy" onError={() => setFailed(true)} className="absolute inset-0 block h-full w-full object-cover" />
       )}
     </div>
   );

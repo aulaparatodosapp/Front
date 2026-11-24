@@ -140,7 +140,7 @@ export default function RegisterPage() {
         </div>
         <FormField label="Contraseña" name="password" type="password" maxLength={20} autoComplete="new-password" value={form.password} onChange={set("password")} error={errors.password} />
         <FormField label="Confirmar contraseña" name="confirm" type="password" maxLength={20} autoComplete="new-password" value={form.confirm} onChange={set("confirm")} error={errors.confirm} />
-        <button type="submit" disabled={loading} className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-60">
+        <button type="submit" disabled={loading} className="w-full rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700 disabled:opacity-60">
           {loading ? "Creando cuenta..." : "Registrarme"}
         </button>
       </form>
@@ -152,7 +152,7 @@ export default function RegisterPage() {
 
       <p className="mt-3 text-center text-sm text-slate-500">
         ¿Ya tenés cuenta?{" "}
-        <Link href="/login" className="font-semibold text-indigo-600 hover:underline">
+        <Link href="/login" className="font-semibold text-slate-900 hover:underline">
           Iniciá sesión
         </Link>
       </p>

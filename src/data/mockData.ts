@@ -16,9 +16,9 @@ export const mockCourses: Course[] = [
   { id: 3, nombre: "Internet y seguridad digital", nivel: "Básico", descripcion: "Aprende a navegar por internet y proteger tu información personal.", imagen: "/images/courses/seguridad-digital.jpg" },
   { id: 4, nombre: "Herramientas digitales", nivel: "Intermedio", descripcion: "Desarrolla habilidades para utilizar herramientas digitales en tus actividades diarias.", imagen: "/images/courses/herramientas-digitales.jpg" },
   { id: 5, nombre: "Diseño digital", nivel: "Intermedio", descripcion: "Descubre los principios del diseño y crea tus primeros proyectos visuales.", imagen: "/images/courses/diseño-digital.jpg" },
-  { id: 6, nombre: "Introducción a la programación", nivel: "Intermedio", descripcion: "Conoce los conceptos fundamentales de la programación y la lógica computacional.", imagen: "/images/courses/programacion.jpg" },
+  { id: 6, nombre: "Introducción a la programación", nivel: "Intermedio", descripcion: "Conoce los conceptos fundamentales de la programación y la lógica computacional.", imagen: "/images/courses/programación.jpg" },
   { id: 7, nombre: "Desarrollo web", nivel: "Avanzado", descripcion: "Aprende a construir sitios web utilizando tecnologías modernas.", imagen: "/images/courses/desarrollo-web.jpg" },
-  { id: 8, nombre: "Análisis de datos", nivel: "Avanzado", descripcion: "Aprende a organizar, interpretar y visualizar información para tomar decisiones.", imagen: "/images/courses/analisis-de-datos.jpg" },
+  { id: 8, nombre: "Análisis de datos", nivel: "Avanzado", descripcion: "Aprende a organizar, interpretar y visualizar información para tomar decisiones.", imagen: "/images/courses/análisis-de-datos.jpg" },
   { id: 9, nombre: "Desarrollo de proyectos digitales", nivel: "Avanzado", descripcion: "Planifica y desarrolla proyectos digitales aplicando tus conocimientos.", imagen: "/images/courses/proyectos-digitales.jpg" },
 ];
 
