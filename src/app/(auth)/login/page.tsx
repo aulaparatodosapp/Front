@@ -9,7 +9,7 @@ import GoogleButton from "@/components/auth/GoogleButton";
 import { authService } from "@/services/authService";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/context/ToastContext";
-import type { AuthSession, BenefitType } from "@/types";
+import type { AuthSession } from "@/types";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_MAX = 254;
@@ -56,8 +56,6 @@ export default function LoginPage() {
     run(() => authService.login(email.trim(), password));
   };
 
-  const quick = (kind: BenefitType) => run(() => authService.quickLogin(kind));
-
   return (
     <AuthShell title="Iniciar sesión" subtitle="Accedé a tu aula virtual">
       <form onSubmit={onSubmit} noValidate className="space-y-4">
@@ -77,18 +75,6 @@ export default function LoginPage() {
         <span className="h-px flex-1 bg-slate-200" /> o <span className="h-px flex-1 bg-slate-200" />
       </div>
       <GoogleButton disabled={loading} onClick={() => run(() => authService.loginWithGoogle())} />
-
-      <div className="mt-6 rounded-lg border border-dashed border-slate-300 bg-slate-50 p-3">
-        <p className="mb-2 text-xs font-medium text-slate-600">Accesos rápidos de prueba</p>
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <button type="button" disabled={loading} onClick={() => quick("ESTANDAR")} className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 disabled:opacity-60">
-            Entrar como Alumno Estándar
-          </button>
-          <button type="button" disabled={loading} onClick={() => quick("PREMIUM")} className="flex-1 rounded-lg bg-slate-900 px-3 py-2 text-xs font-medium text-white hover:bg-slate-700 disabled:opacity-60">
-            Entrar como Alumno Premium
-          </button>
-        </div>
-      </div>
 
       <p className="mt-6 text-center text-sm text-slate-500">
         ¿No tenés cuenta?{" "}

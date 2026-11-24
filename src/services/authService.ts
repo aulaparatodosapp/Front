@@ -1,5 +1,5 @@
 import { mockAccounts } from "@/data/mockData";
-import type { AuthSession, BenefitType, RegisterPayload } from "@/types";
+import type { AuthSession, RegisterPayload } from "@/types";
 
 const delay = (ms = 700) => new Promise((r) => setTimeout(r, ms));
 
@@ -35,16 +35,8 @@ export const authService = {
       ...data,
       id: crypto.randomUUID(), // generado por el backend
       fechaRegistro: new Date().toISOString().slice(0, 10), // generado por el backend
-      benefit: "ESTANDAR" as BenefitType,
     };
     registered.push(acc);
-    return toSession(acc);
-  },
-
-  /** Accesos rápidos de desarrollo */
-  async quickLogin(kind: BenefitType): Promise<AuthSession> {
-    await delay(400);
-    const acc = registered.find((a) => a.benefit === kind)!;
     return toSession(acc);
   },
 

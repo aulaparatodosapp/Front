@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { BenefitBadge } from "@/components/student/Badges";
 
 /**
  * Réplica visual de `components/layout/Navbar` (sección pública) con soporte de sesión.
@@ -47,9 +46,8 @@ export default function SessionNavbar() {
               <Link href="/dashboard" className="font-medium transition hover:text-slate-300">
                 Mi panel
               </Link>
-              <span className="flex items-center gap-2 text-sm text-slate-300">
+              <span className="text-sm text-slate-300">
                 {user.firstName}
-                <BenefitBadge benefit={user.benefit} />
               </span>
               <button
                 type="button"
@@ -94,9 +92,8 @@ export default function SessionNavbar() {
             <hr className="border-slate-700" />
             {isLoading ? null : isAuthenticated && user ? (
               <>
-                <span className="flex items-center gap-2 text-sm text-slate-300">
+                <span className="text-sm text-slate-300">
                   {user.firstName}
-                  <BenefitBadge benefit={user.benefit} />
                 </span>
                 <Link href="/dashboard" onClick={cerrarMenu}>
                   Mi panel

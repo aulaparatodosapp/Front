@@ -5,8 +5,8 @@ export interface MockAccount extends User {
 }
 
 export const mockAccounts: MockAccount[] = [
-  { id: "u1", firstName: "Lucía", lastName: "Fernández", email: "alumno@aulaparatodos.org", telefono: "+54 11 5555-1234", fechaNacimiento: "2001-04-12", fechaRegistro: "2026-01-15", password: "123456", benefit: "ESTANDAR" },
-  { id: "u2", firstName: "Mateo", lastName: "Gómez", email: "premium@aulaparatodos.org", telefono: "+54 351 555-9876", fechaNacimiento: "1998-09-30", fechaRegistro: "2026-02-03", password: "123456", benefit: "PREMIUM" },
+  { id: "u1", firstName: "Lucía", lastName: "Fernández", email: "alumno@aulaparatodos.org", telefono: "+54 11 5555-1234", fechaNacimiento: "2001-04-12", fechaRegistro: "2026-01-15", password: "123456" },
+  { id: "u2", firstName: "Mateo", lastName: "Gómez", email: "premium@aulaparatodos.org", telefono: "+54 351 555-9876", fechaNacimiento: "1998-09-30", fechaRegistro: "2026-02-03", password: "123456" },
 ];
 
 /** Cursos tal como los devolverá el backend. */
@@ -22,22 +22,22 @@ export const mockCourses: Course[] = [
   { id: 9, nombre: "Desarrollo de proyectos digitales", nivel: "Avanzado", descripcion: "Planifica y desarrolla proyectos digitales aplicando tus conocimientos.", imagen: "/images/courses/proyectos-digitales.jpg" },
 ];
 
-const L = (id: string, title: string, duration: string, premiumOnly: boolean, description: string): Lesson => ({ id, title, duration, premiumOnly, description });
+const L = (id: string, title: string, duration: string, description: string): Lesson => ({ id, title, duration, description });
 
 /**
  * Datos mock EXTRA (cupos y clases) que el backend todavía no entrega.
  * Se combinan con `mockCourses` por `id` en studentService.
  */
 export const mockCourseExtras: Record<number, { availableSlots: number; lessons: Lesson[] }> = {
-  1: { availableSlots: 4, lessons: [L("1-1", "Partes de la computadora", "20 min", false, "Hardware y periféricos básicos."), L("1-2", "Sistema operativo y archivos", "30 min", false, "Carpetas, archivos y escritorio."), L("1-3", "Taller de práctica guiada", "45 min", true, "Ejercicios con acompañamiento del docente.")] },
-  2: { availableSlots: 12, lessons: [L("2-1", "Procesador de textos", "30 min", false, "Crear y dar formato a documentos."), L("2-2", "Hojas de cálculo", "35 min", false, "Fórmulas y tablas básicas."), L("2-3", "Presentaciones efectivas", "40 min", true, "Diseño de diapositivas con devolución personalizada.")] },
-  3: { availableSlots: 1, lessons: [L("3-1", "Navegar de forma segura", "25 min", false, "Buscadores, sitios confiables y estafas."), L("3-2", "Contraseñas y privacidad", "30 min", false, "Gestión de claves y datos personales."), L("3-3", "Clase en vivo: casos reales", "60 min", true, "Análisis de casos con el docente.")] },
-  4: { availableSlots: 8, lessons: [L("4-1", "Almacenamiento en la nube", "25 min", false, "Compartir y organizar archivos."), L("4-2", "Videollamadas y colaboración", "30 min", false, "Herramientas de trabajo remoto."), L("4-3", "Automatizá tareas cotidianas", "40 min", true, "Atajos y flujos de trabajo avanzados.")] },
-  5: { availableSlots: 6, lessons: [L("5-1", "Principios de diseño", "30 min", false, "Color, tipografía y composición."), L("5-2", "Tu primera pieza gráfica", "40 min", false, "Creación paso a paso."), L("5-3", "Revisión personalizada de portfolio", "45 min", true, "Feedback individual del docente.")] },
-  6: { availableSlots: 10, lessons: [L("6-1", "¿Qué es programar?", "20 min", false, "Algoritmos y lógica."), L("6-2", "Variables y condicionales", "40 min", false, "Primeros programas."), L("6-3", "Proyecto guiado", "60 min", true, "Construcción de un programa completo.")] },
-  7: { availableSlots: 0, lessons: [L("7-1", "HTML y CSS básicos", "40 min", false, "Estructura y estilos de una página."), L("7-2", "Interactividad con JavaScript", "45 min", false, "Eventos y manipulación del DOM."), L("7-3", "Despliegue de tu sitio", "35 min", true, "Publicación con acompañamiento.")] },
-  8: { availableSlots: 3, lessons: [L("8-1", "Organización de datos", "30 min", false, "Limpieza y estructura de tablas."), L("8-2", "Gráficos e indicadores", "40 min", false, "Visualización para decidir."), L("8-3", "Caso práctico con mentoría", "60 min", true, "Análisis de un dataset real con el docente.")] },
-  9: { availableSlots: 0, lessons: [L("9-1", "Planificación de proyectos", "30 min", false, "Objetivos, alcance y cronograma."), L("9-2", "Trabajo en equipo", "30 min", false, "Roles y herramientas colaborativas."), L("9-3", "Mentoría de proyecto final", "60 min", true, "Seguimiento personalizado de tu proyecto.")] },
+  1: { availableSlots: 4, lessons: [L("1-1", "Partes de la computadora", "20 min", "Hardware y periféricos básicos."), L("1-2", "Sistema operativo y archivos", "30 min", "Carpetas, archivos y escritorio."), L("1-3", "Taller de práctica guiada", "45 min", "Ejercicios con acompañamiento del docente.")] },
+  2: { availableSlots: 12, lessons: [L("2-1", "Procesador de textos", "30 min", "Crear y dar formato a documentos."), L("2-2", "Hojas de cálculo", "35 min", "Fórmulas y tablas básicas."), L("2-3", "Presentaciones efectivas", "40 min", "Diseño de diapositivas con devolución personalizada.")] },
+  3: { availableSlots: 1, lessons: [L("3-1", "Navegar de forma segura", "25 min", "Buscadores, sitios confiables y estafas."), L("3-2", "Contraseñas y privacidad", "30 min", "Gestión de claves y datos personales."), L("3-3", "Clase en vivo: casos reales", "60 min", "Análisis de casos con el docente.")] },
+  4: { availableSlots: 8, lessons: [L("4-1", "Almacenamiento en la nube", "25 min", "Compartir y organizar archivos."), L("4-2", "Videollamadas y colaboración", "30 min", "Herramientas de trabajo remoto."), L("4-3", "Automatizá tareas cotidianas", "40 min", "Atajos y flujos de trabajo avanzados.")] },
+  5: { availableSlots: 6, lessons: [L("5-1", "Principios de diseño", "30 min", "Color, tipografía y composición."), L("5-2", "Tu primera pieza gráfica", "40 min", "Creación paso a paso."), L("5-3", "Revisión personalizada de portfolio", "45 min", "Feedback individual del docente.")] },
+  6: { availableSlots: 10, lessons: [L("6-1", "¿Qué es programar?", "20 min", "Algoritmos y lógica."), L("6-2", "Variables y condicionales", "40 min", "Primeros programas."), L("6-3", "Proyecto guiado", "60 min", "Construcción de un programa completo.")] },
+  7: { availableSlots: 0, lessons: [L("7-1", "HTML y CSS básicos", "40 min", "Estructura y estilos de una página."), L("7-2", "Interactividad con JavaScript", "45 min", "Eventos y manipulación del DOM."), L("7-3", "Despliegue de tu sitio", "35 min", "Publicación con acompañamiento.")] },
+  8: { availableSlots: 3, lessons: [L("8-1", "Organización de datos", "30 min", "Limpieza y estructura de tablas."), L("8-2", "Gráficos e indicadores", "40 min", "Visualización para decidir."), L("8-3", "Caso práctico con mentoría", "60 min", "Análisis de un dataset real con el docente.")] },
+  9: { availableSlots: 0, lessons: [L("9-1", "Planificación de proyectos", "30 min", "Objetivos, alcance y cronograma."), L("9-2", "Trabajo en equipo", "30 min", "Roles y herramientas colaborativas."), L("9-3", "Mentoría de proyecto final", "60 min", "Seguimiento personalizado de tu proyecto.")] },
 };
 
 /** Inscripciones iniciales por usuario */

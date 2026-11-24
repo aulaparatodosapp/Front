@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default function CatalogCourseCard({ course, enrolled, loading, onEnroll }: Props) {
-  const hasSlots = course.availableSlots !== undefined;
   const noSlots = course.availableSlots === 0;
   return (
     <article className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg">
@@ -21,13 +20,6 @@ export default function CatalogCourseCard({ course, enrolled, loading, onEnroll 
         </div>
         <h3 className="mt-2 font-bold text-slate-900">{course.nombre}</h3>
         <p className="mt-1 flex-1 text-sm leading-6 text-slate-600">{course.descripcion}</p>
-        {hasSlots && (
-          <p className={`mt-2 text-sm font-medium ${noSlots ? "text-red-600" : "text-green-700"}`}>
-            {noSlots
-              ? "0 cupos - Sin cupos"
-              : `${course.availableSlots} ${course.availableSlots === 1 ? "cupo disponible" : "cupos disponibles"}`}
-          </p>
-        )}
         {noSlots && !enrolled && (
           <p role="alert" className="mt-1 text-xs text-red-600">
             No hay cupos disponibles para este curso.

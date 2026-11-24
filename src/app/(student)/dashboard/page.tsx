@@ -6,12 +6,11 @@ import { useToast } from "@/context/ToastContext";
 import { studentService } from "@/services/studentService";
 import type { Course, Donation, Enrollment } from "@/types";
 import Sidebar, { type SectionId } from "@/components/student/Sidebar";
-import { BenefitBadge } from "@/components/student/Badges";
+
 import SummaryCards from "@/components/student/SummaryCards";
 import EnrolledCourseCard from "@/components/student/EnrolledCourseCard";
 import CatalogCourseCard from "@/components/student/CatalogCourseCard";
 import LessonList from "@/components/student/LessonList";
-import PlanComparison from "@/components/student/PlanComparison";
 import DonationHistory from "@/components/student/DonationHistory";
 
 export default function DashboardPage() {
@@ -101,7 +100,6 @@ export default function DashboardPage() {
             </button>
             <h1 className="text-xl font-bold">¡Hola, {user.firstName}!</h1>
           </div>
-          <BenefitBadge benefit={user.benefit} />
         </header>
 
         <main className="space-y-6 p-4 md:p-8">
@@ -142,12 +140,6 @@ export default function DashboardPage() {
                   </div>
                 </section>
               )}
-              {section === "planes" && (
-                <section className="space-y-3">
-                  <h2 className="text-lg font-bold">Planes y beneficios</h2>
-                  <PlanComparison current={user.benefit} />
-                </section>
-              )}
               {section === "donaciones" && (
                 <section className="space-y-3">
                   <h2 className="text-lg font-bold">Historial de donaciones</h2>
@@ -165,7 +157,6 @@ export default function DashboardPage() {
                       <p className="text-sm text-slate-500">{user.email}</p>
                     </div>
                   </div>
-                  <BenefitBadge benefit={user.benefit} />
                 </section>
               )}
             </>
@@ -173,7 +164,7 @@ export default function DashboardPage() {
         </main>
       </div>
 
-      {openCourse && <LessonList course={openCourse} benefit={user.benefit} onClose={() => setOpenCourse(null)} />}
+      {openCourse && <LessonList course={openCourse} onClose={() => setOpenCourse(null)} />}
     </div>
   );
 }

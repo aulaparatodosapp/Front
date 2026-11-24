@@ -1,4 +1,3 @@
-export type BenefitType = "ESTANDAR" | "PREMIUM";
 export type EnrollmentStatus = "Activa" | "En curso" | "Pendiente" | "Completada";
 
 export interface User {
@@ -9,7 +8,6 @@ export interface User {
   telefono: string;
   fechaNacimiento: string; // ISO yyyy-mm-dd
   fechaRegistro: string; // ISO, generado al registrarse
-  benefit: BenefitType;
 }
 
 /** Datos que envía el formulario de registro (sin id ni fechaRegistro: los genera el backend) */
@@ -26,7 +24,6 @@ export interface Lesson {
   id: string;
   title: string;
   duration: string;
-  premiumOnly: boolean;
   description: string;
 }
 

@@ -1,12 +1,11 @@
 "use client";
 
-export type SectionId = "resumen" | "cursos" | "explorar" | "planes" | "donaciones" | "perfil";
+export type SectionId = "resumen" | "cursos" | "explorar" | "donaciones" | "perfil";
 
 const items: { id: SectionId; label: string }[] = [
   { id: "resumen", label: "Resumen / Inicio" },
   { id: "cursos", label: "Mis Cursos" },
   { id: "explorar", label: "Explorar e Inscribirse" },
-  { id: "planes", label: "Planes y Beneficios" },
   { id: "donaciones", label: "Historial de Donaciones" },
   { id: "perfil", label: "Perfil" },
 ];
@@ -24,7 +23,7 @@ export default function Sidebar({ active, onSelect, onLogout, open, onClose }: P
     <>
       {open && <div className="fixed inset-0 z-30 bg-slate-900/40 md:hidden" onClick={onClose} aria-hidden />}
       <aside
-        className={`fixed left-0 top-[68px] z-40 flex h-[calc(100dvh-68px)] w-64 shrink-0 flex-col overflow-hidden bg-slate-700 p-4 pb-8 text-white transition-transform md:sticky md:top-[68px] md:translate-x-0 ${
+        className={`fixed left-0 top-[68px] z-40 flex h-[calc(100dvh-68px)] w-64 shrink-0 flex-col overflow-hidden border-r border-slate-700 bg-slate-900 p-4 pb-8 text-white transition-transform md:sticky md:top-[68px] md:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
