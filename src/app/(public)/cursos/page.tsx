@@ -90,7 +90,12 @@ const cursos: Curso[] = [
   },
 ];
 
-const niveles = ["Todos", "Básico", "Intermedio", "Avanzado"] as const;
+const niveles = [
+  "Todos",
+  "Básico",
+  "Intermedio",
+  "Avanzado",
+] as const;
 
 type FiltroNivel = (typeof niveles)[number];
 
@@ -192,6 +197,7 @@ export default function CursosPage() {
             <h2 className="text-xl font-bold text-slate-900">
               No encontramos cursos
             </h2>
+
             <p className="mt-3 text-slate-600">
               Prueba con otra búsqueda o selecciona otro nivel.
             </p>
@@ -203,15 +209,16 @@ export default function CursosPage() {
               gridTemplateColumns:
                 "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
               gap: "24px",
+              alignItems: "stretch",
             }}
           >
             {cursosFiltrados.map((curso) => (
               <article
                 key={curso.id}
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg"
+                className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg"
               >
                 {/* FOTOGRAFÍA */}
-                <div className="overflow-hidden">
+                <div className="shrink-0 overflow-hidden">
                   <Image
                     src={curso.imagen}
                     alt={curso.nombre}
@@ -222,7 +229,7 @@ export default function CursosPage() {
                 </div>
 
                 {/* INFORMACIÓN */}
-                <div className="p-6">
+                <div className="flex flex-1 flex-col items-start p-6">
                   <span
                     className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${estilosNivel[curso.nivel]}`}
                   >
@@ -233,13 +240,13 @@ export default function CursosPage() {
                     {curso.nombre}
                   </h2>
 
-                  <p className="mt-3 min-h-20 leading-7 text-slate-600">
+                  <p className="mt-3 mb-6 leading-7 text-slate-600">
                     {curso.descripcion}
                   </p>
 
                   <Link
                     href={`/cursos/${curso.id}`}
-                    className="mt-6 inline-block rounded-lg bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-700"
+                    className="mt-auto inline-block rounded-lg bg-slate-900 px-5 py-3 text-center font-semibold text-white transition hover:bg-slate-700"
                   >
                     Ver curso
                   </Link>
