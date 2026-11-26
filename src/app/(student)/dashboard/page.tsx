@@ -109,8 +109,24 @@ export default function DashboardPage() {
             <>
               {section === "resumen" && (
                 <>
+                  <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-slate-900 text-xl font-bold text-white">{initials}</div>
+                      <div className="min-w-0">
+                        <p className="text-lg font-semibold">
+                          {user.firstName} {user.lastName}
+                        </p>
+                        <p className="break-words text-sm text-slate-500">{user.email}</p>
+                      </div>
+                    </div>
+                  </section>
                   <SummaryCards enrollments={enrollments} />
-                  {myCourses}
+                  <button
+                    onClick={() => setSection("cursos")}
+                    className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
+                  >
+                    Ver mis cursos
+                  </button>
                 </>
               )}
               {section === "cursos" && myCourses}
@@ -145,21 +161,7 @@ export default function DashboardPage() {
                   <h2 className="text-lg font-bold">Historial de donaciones</h2>
                   <DonationHistory donations={donations} />
                 </section>
-              )}
-              {section === "perfil" && (
-                <section className="max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-900 text-xl font-bold text-white">{initials}</div>
-                    <div>
-                      <p className="text-lg font-semibold">
-                        {user.firstName} {user.lastName}
-                      </p>
-                      <p className="text-sm text-slate-500">{user.email}</p>
-                    </div>
-                  </div>
-                </section>
-              )}
-            </>
+              )}            </>
           )}
         </main>
       </div>

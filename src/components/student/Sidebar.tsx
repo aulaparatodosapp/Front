@@ -1,14 +1,12 @@
 "use client";
 
-export type SectionId = "resumen" | "cursos" | "explorar" | "donaciones" | "perfil";
+export type SectionId = "resumen" | "cursos" | "explorar" | "donaciones";
 
 const items: { id: SectionId; label: string }[] = [
   { id: "resumen", label: "Resumen / Inicio" },
   { id: "cursos", label: "Mis Cursos" },
   { id: "explorar", label: "Explorar e Inscribirse" },
-  { id: "donaciones", label: "Historial de Donaciones" },
-  { id: "perfil", label: "Perfil" },
-];
+  { id: "donaciones", label: "Historial de Donaciones" },];
 
 interface Props {
   active: SectionId;
