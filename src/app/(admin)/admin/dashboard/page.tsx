@@ -1,7 +1,23 @@
 import { dashboardMock } from "../mocks/dashboardMock";
+import { studentsMock } from "../mocks/studentsMock";
+import { coursesMock } from "../mocks/coursesMock";
+import { donationsMock } from "@/components/admin/donationsMock";
+
 import Link from "next/link";
 //icons
 import { Users, BookOpen, ClipboardList, HeartHandshake } from "lucide-react";
+
+const totalStudents = studentsMock.length;
+const totalCourses = coursesMock.length;
+const totalEnrollments = studentsMock.reduce(
+  (total, student) => total + student.enrollments.length,
+  0
+);
+const totalDonated = donationsMock.reduce(
+  (total, donation) => total + donation.amount,
+  0
+);
+
 
 const Dashboard = () => {
 
@@ -22,28 +38,28 @@ const ultimosAlumnos = [...dashboardMock.recentStudents].sort((a,b) =>{
                     <Users/>
                     <div className="flex flex-col gap-2 items-center">
                     <h3 className="text-sm font-semibold text-blue-400">Alumnos</h3>
-                    <p className="text-3xl font-semibold text-blue-800">{dashboardMock.summary.students}</p>
+                    <p className="text-3xl font-semibold text-blue-800">{totalStudents}</p>
                     </div>
                 </div>
                 <div className="bg-white rounded-md p-6 border border-blue-200 shadow-md flex items-center gap-4 w-full max-w-sm">
                     <BookOpen/>
                     <div className="flex flex-col gap-2 items-center">
                     <h3 className="text-sm font-semibold text-blue-400">Cursos</h3>
-                    <p className="text-3xl font-semibold text-blue-800">{dashboardMock.summary.courses}</p>
+                    <p className="text-3xl font-semibold text-blue-800">{totalCourses}</p>
                     </div>
                 </div>
                 <div className="bg-white rounded-md p-6 border border-blue-200 shadow-md flex items-center gap-4 w-full max-w-sm">
                     <ClipboardList/>
                     <div className="flex flex-col gap-2 items-center">
                     <h3 className="text-sm font-semibold text-blue-400">Inscripciones</h3>
-                    <p className="text-3xl font-semibold text-blue-800">{dashboardMock.summary.enrollments}</p>
+                    <p className="text-3xl font-semibold text-blue-800">{totalEnrollments}</p>
                     </div>
                 </div>
                 <div className="bg-white rounded-md p-6 border border-blue-200 shadow-md flex items-center gap-4 w-full max-w-sm">
                     <HeartHandshake/>
                     <div className="flex flex-col gap-2 items-center">
                     <h3 className="text-sm font-semibold text-blue-400">Donaciones</h3>
-                    <p className="text-3xl font-semibold text-blue-800">{dashboardMock.summary.donations}</p>
+                    <p className="text-3xl font-semibold text-blue-800">{totalDonated}</p>
                     </div>
                 </div>
                 
