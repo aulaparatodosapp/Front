@@ -1,22 +1,26 @@
 "use client";
 
-export type SectionId = "resumen" | "cursos" | "explorar" | "donaciones";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const items: { id: SectionId; label: string }[] = [
-  { id: "resumen", label: "Resumen / Inicio" },
-  { id: "cursos", label: "Mis Cursos" },
-  { id: "explorar", label: "Explorar e Inscribirse" },
-  { id: "donaciones", label: "Historial de Donaciones" },];
+const items = [
+  { href: "/dashboard", label: "Resumen / Inicio" },
+  { href: "/dashboard/cursos", label: "Mis Cursos" },
+  { href: "/dashboard/explorar", label: "Explorar e Inscribirse" },
+  { href: "/dashboard/donaciones", label: "Historial de Donaciones" },
+];
 
 interface Props {
-  active: SectionId;
-  onSelect: (id: SectionId) => void;
   onLogout: () => void;
   open: boolean;
   onClose: () => void;
 }
 
-export default function Sidebar({ active, onSelect, onLogout, open, onClose }: Props) {
+export default function Sidebar({ onLogout, open, onClose }: Props) {
+  const pathname = usePathname();
+  // "/dashboard" es prefijo de las demás rutas: solo se activa con coincidencia exacta.
+  const isActive = (href: string) => (href === "/dashboard" ? pathname === href : pathname.startsWith(href));
+
   return (
     <>
       {open && <div className="fixed inset-0 z-30 bg-slate-900/40 md:hidden" onClick={onClose} aria-hidden />}
@@ -28,19 +32,17 @@ export default function Sidebar({ active, onSelect, onLogout, open, onClose }: P
         <p className="mb-6 shrink-0 px-2 text-lg font-bold text-white">Mi panel</p>
         <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto">
           {items.map((i) => (
-            <button
-              key={i.id}
-              onClick={() => {
-                onSelect(i.id);
-                onClose();
-              }}
-              aria-current={active === i.id ? "page" : undefined}
+            <Link
+              key={i.href}
+              href={i.href}
+              onClick={onClose}
+              aria-current={isActive(i.href) ? "page" : undefined}
               className={`rounded-lg px-3 py-2 text-left text-sm font-medium ${
-                active === i.id ? "bg-white text-slate-900" : "text-slate-300 hover:bg-white/10 hover:text-white"
+                isActive(i.href) ? "bg-white text-slate-900" : "text-slate-300 hover:bg-white/10 hover:text-white"
               }`}
             >
               {i.label}
-            </button>
+            </Link>
           ))}
         </nav>
         <div className="mt-3 shrink-0 border-t border-white/10 pt-4 pb-10">

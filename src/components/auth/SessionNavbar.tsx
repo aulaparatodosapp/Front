@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 /**
@@ -21,6 +22,7 @@ export default function SessionNavbar() {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
   const [menuAbierto, setMenuAbierto] = useState(false);
   const cerrarMenu = () => setMenuAbierto(false);
+  const panelActivo = usePathname().startsWith("/dashboard");
 
   return (
     <header className="sticky top-0 z-50 bg-slate-900 text-white shadow-md">
@@ -43,7 +45,11 @@ export default function SessionNavbar() {
         <div className="hidden items-center gap-4 lg:flex">
           {isLoading ? null : isAuthenticated && user ? (
             <>
-              <Link href="/dashboard" className="font-medium transition hover:text-slate-300">
+              <Link
+                href="/dashboard"
+                aria-current={panelActivo ? "page" : undefined}
+                className={`font-medium transition hover:text-slate-300 ${panelActivo ? "underline underline-offset-8" : ""}`}
+              >
                 Mi panel
               </Link>
               <span className="text-sm text-slate-300">
@@ -95,7 +101,12 @@ export default function SessionNavbar() {
                 <span className="text-sm text-slate-300">
                   {user.firstName}
                 </span>
-                <Link href="/dashboard" onClick={cerrarMenu}>
+                <Link
+                  href="/dashboard"
+                  onClick={cerrarMenu}
+                  aria-current={panelActivo ? "page" : undefined}
+                  className={panelActivo ? "underline underline-offset-8" : undefined}
+                >
                   Mi panel
                 </Link>
                 <button
