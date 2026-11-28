@@ -2,14 +2,17 @@
 import type { SyntheticEvent } from "react";
 import { useState } from "react";
 import { teachers } from "@/data/teachers/teachers";
+import { categoriesMock } from "@/app/(admin)/admin/mocks/categoriesMock";
 
 export interface Course {
   id: number;
   name: string;
   description: string;
+  categoryId: number;
   level: string;
   image: string;
   teacherId?: number;
+  isActive: boolean;
 }
 
 interface CourseModalProps {
@@ -25,6 +28,10 @@ const CourseModal = ({ onClose, onSave, course }: CourseModalProps) => {
   const [teacherCourse, setTeacherCourse] = useState(course ? String(course.teacherId ?? "") : "");
   const [imageCourse, setImageCourse] = useState(course ? course.image : "");
 
+  const [categoryCourse, setCategoryCourse] = useState(
+  course ? String(course.categoryId ?? "") : ""
+  );
+
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -32,9 +39,11 @@ const CourseModal = ({ onClose, onSave, course }: CourseModalProps) => {
       id: course ? course.id : Date.now(),
       name: nameCourse,
       description: descriptionCourse,
+      categoryId: Number(categoryCourse),
       level: levelCourse,
       teacherId: Number(teacherCourse),
       image: imageCourse,
+      isActive: course ? course.isActive : true,
     };
 
     onSave(newCourse);
@@ -90,6 +99,26 @@ const CourseModal = ({ onClose, onSave, course }: CourseModalProps) => {
               rows={3}
               className="rounded-lg border border-slate-300 p-2 text-sm outline-none focus:border-blue-500"
             />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label htmlFor="category" className="text-sm font-medium text-slate-700">
+              Categoría
+              </label>
+
+            <select
+              id="category"
+              value={categoryCourse}
+              required
+              onChange={(e) => setCategoryCourse(e.target.value)}
+              className="rounded-lg border border-slate-300 p-2 text-sm outline-none focus:border-blue-500">            
+              <option value="">Seleccionar categoría</option>
+              {categoriesMock.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex flex-col gap-2">
