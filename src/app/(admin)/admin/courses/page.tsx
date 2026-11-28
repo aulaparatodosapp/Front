@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { teachers } from "@/data/teachers/teachers";
 import { coursesMock } from "../mocks/coursesMock";
+import { categoriesMock } from "../mocks/categoriesMock";
 import CourseModal, { type Course } from "@/components/admin/CourseModal";
+import Link from "next/link";
 
 const Courses = () => {
   const [courses, setCourses] = useState<Course[]>(coursesMock);
@@ -25,18 +27,26 @@ const Courses = () => {
     });
   };
 
-    const handleDeleteCourse = (id: number) => {
+    const handleToggleCourse = (id: number) => {
+         const curso = courses.find((curso) => curso.id === id);
 
-     const confirmDelete = window.confirm(
-        "¿Estás seguro de que querés eliminar este curso?"
-      );
+            if (!curso) return;
 
-      if (!confirmDelete) return;
+            const confirmToggle = window.confirm(
+              curso.isActive
+                ? "¿Estás seguro de que querés deshabilitar este curso?"
+                : "¿Querés volver a habilitar este curso?"
+            );
 
-    setCourses((prevCourses) =>
-      prevCourses.filter((rem) => rem.id !== id)
-    );
-  };
+            if (!confirmToggle) return;
+    
+        setCourses((prevCourses) =>
+          prevCourses.map((curso) =>
+            curso.id === id
+              ? { ...curso, isActive: !curso.isActive }
+              : curso
+          ));
+      };
 
   return (
     <main className="min-h-screen bg-slate-100 p-6">
@@ -72,10 +82,17 @@ const Courses = () => {
           {courses.map((curso) => (
             <div
               key={curso.id}
-              className="rounded-xl border border-blue-200 bg-white p-4 shadow-md"
-            >
-              <p className="text-lg font-semibold text-slate-800">
+              className={`rounded-xl border p-3 shadow-md ${curso.isActive ? "border-blue-200 bg-white" : "border-slate-400 bg-slate-300" }`}>                                                  
+              <p className="min-h-14 text-lg font-semibold text-slate-800">
                 {curso.name}
+              </p>
+
+              <p className="mt-2 min-h-20 text-sm text-slate-600">
+                {curso.description}
+              </p>
+
+              <p className="mt-2 text-sm text-slate-600">
+                Categoría: {categoriesMock.find((cat) => cat.id === curso.categoryId)?.name}
               </p>
 
               <p className="mt-2 text-sm text-slate-600">
@@ -97,17 +114,25 @@ const Courses = () => {
                   setSelectedCourse(curso);
                   setIsModalOpen(true);
                 }}
-                className="mt-4 rounded-lg bg-slate-800 px-4 py-2 text-white cursor-pointer"
+                className="mt-4 rounded-lg bg-slate-700 px-4 py-2 text-white cursor-pointer"
               >
                 Editar
               </button>
 
               <button
-                onClick={() => handleDeleteCourse(curso.id)}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 ml-2 cursor-pointer rounded-lg transition-colors"
-              >
-                Eliminar
+                onClick={() => handleToggleCourse(curso.id)}
+                className={`${curso.isActive
+                      ? "bg-red-600 hover:bg-red-700"
+                      : "bg-green-600 hover:bg-green-700"
+                    } text-white px-4 py-2 ml-2 cursor-pointer rounded-lg transition-colors`}
+                  >
+                {curso.isActive ? "Deshabilitar" : "Habilitar"}
               </button>
+
+              <button><Link href={`/admin/courses/${curso.id}/content`}
+               className="mt-4 inline-block rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                Gestionar contenidos
+                </Link></button>
                 </div>
           ))}
             </div>
